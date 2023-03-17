@@ -10,4 +10,9 @@ public class Test {
 	public int sum() {
 		return 0;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 }
