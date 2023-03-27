@@ -25,32 +25,49 @@ public class EmpMain {
 			
 			switch (menu) {
 			case 1:
-				
+				EmpDTO dto = new EmpDTO();
+				System.out.println("새 사원 추가");
+				System.out.print("사원번호 입력 >> ");
+				dto.setEmpno(Integer.parseInt(sc.nextLine()));
+				System.out.print("사원이름 입력 >> ");
+				dto.setEname(sc.nextLine());
+				System.out.print("사원직책 입력 >> ");
+				dto.setJob(sc.nextLine());
+				System.out.print("매니저번호 입력 >> ");
+				dto.setMgr(Integer.parseInt(sc.nextLine()));
+				System.out.print("급여 입력 >> ");
+				dto.setSal(Integer.parseInt(sc.nextLine()));
+				System.out.print("추가수당 입력 >> ");
+				dto.setComm(Integer.parseInt(sc.nextLine()));
+				System.out.print("부서번호 입력 >> ");
+				dto.setDeptno(Integer.parseInt(sc.nextLine()));
+				System.out.println(empDAO.insert(dto)?"추가완료":"추가실패");
 				break;
 			case 2:
-				
+				System.out.print("삭제할 사원 번호 >> ");
+				int empno = Integer.parseInt(sc.nextLine());
+				System.out.println(empDAO.remove(empno)?"삭제완료":"삭제실패");
 				break;
 			case 3:
 				System.out.print("급여를 수정할 사원 번호 >> ");
-				int empno = Integer.parseInt(sc.nextLine());
+				empno = Integer.parseInt(sc.nextLine());
 				System.out.print("수정할 급여 >> \n");
 				int sal = Integer.parseInt(sc.nextLine());
 				System.out.println(empDAO.update(sal, empno)?"급여 변경 완료":"급여 변경 실패");
-				
 				break;
 			case 4:
 				System.out.print("사원 번호 입력 >> ");
 				empno = Integer.parseInt(sc.nextLine());
-				EmpDTO dto = empDAO.getRow(empno);
+				EmpDTO dto1 = empDAO.getRow(empno);
 //				System.out.println(dto);
-				if(dto!=null) {
+				if(dto1!=null) {
 				System.out.println("\n====사원정보 조회======");
-				System.out.println("사원번호 : "+dto.getEmpno());
-				System.out.println("사원명 : "+dto.getEname());
-				System.out.println("직무 : "+dto.getJob());
-				System.out.println("급여 : "+dto.getSal());
-				System.out.println("추가수당 : "+dto.getComm());
-				System.out.println("부서번호 : "+dto.getDeptno());
+				System.out.println("사원번호 : "+dto1.getEmpno());
+				System.out.println("사원명 : "+dto1.getEname());
+				System.out.println("직무 : "+dto1.getJob());
+				System.out.println("급여 : "+dto1.getSal());
+				System.out.println("추가수당 : "+dto1.getComm());
+				System.out.println("부서번호 : "+dto1.getDeptno());
 				System.out.println();
 				}else {
 					System.out.println("사원번호를 확인해 주세요");
@@ -81,7 +98,6 @@ public class EmpMain {
 			case 6:
 				flag = false;
 				break;
-
 			default:
 				System.out.println("번호 다시 입력해 주세요");
 				break;
