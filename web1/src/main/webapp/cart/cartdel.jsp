@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>장바구니 비우기</h1>
 
+<%
+	session.removeAttribute("products");
+
+%>
+<h4><a href="cart.html">상품 선택</a></h4>
 </body>
 </html>
