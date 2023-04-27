@@ -1,4 +1,4 @@
-package controller;
+package book.controller;
 
 import java.io.IOException;
 
@@ -9,19 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.naming.factory.TransactionFactory;
-
-import action.Action;
-import action.ActionFactory;
-import action.ActionForward;
-import action.DeleteAction;
-import action.insertAction;
+import book.action.BookAction;
+import book.action.BookActionFactory;
+import book.action.BookActionForward;
 
 /**
- * Servlet implementation class PatternController
+ * Servlet implementation class BookController
  */
 @WebServlet("*.do")
-public class PatternController extends HttpServlet {
+public class BookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -30,43 +26,32 @@ public class PatternController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		
+		// 요청분석 1) 요청경로 2) 컨텍스트 경로 3) ~.do 추출
 		String requestURI = request.getRequestURI();
-		String contextPath = request.getContextPath();
-		String cmd = requestURI.substring(contextPath.length());
+		String ContextPath = request.getContextPath();
+		String cmd = requestURI.substring(ContextPath.length());
 		
-		System.out.println("requestURI "+requestURI);
-		System.out.println("contextPath "+contextPath);
-		System.out.println("cmd "+cmd);
+		// 액셩생성
+		BookActionFactory baf = BookActionFactory.getInstance();
+		BookAction action = baf.action(cmd);
 		
+		//생성된 액션에게 일 시키기(메소드 호출)
+		BookActionForward af = null;
 		
-		ActionFactory actionFactory = ActionFactory.getInstance();
-		
-		
-		Action action = null;
-		
-		if(cmd.equals("/insert.do")) {
-			action = new insertAction();
-		}else if(cmd.equals("/list.do")) {
-			
-		}else if(cmd.equals("/update.do")) {
-			
-		}else if(cmd.equals("/delete.do")) {
-			action = new DeleteAction();			
-		}
-	
-		ActionForward af =null;
 		try {
 			af = action.execute(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		//이동방식에 따라 페이지 보여주기
 		if(af.isRedirect()) {
 			response.sendRedirect(af.getPath());
 		}else {
 			RequestDispatcher rd = request.getRequestDispatcher(af.getPath());
 			rd.forward(request, response);
 		}
+		
 	}
 
 	/**
