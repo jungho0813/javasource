@@ -18,6 +18,10 @@ public class MemberActionFactory {
 			action = new MemberLoginAction();
 		}else if (cmd.equals("/logout.do")) {
 			action = new MemberLogoutAction();
+		}else if (cmd.equals("/change.do")) {
+			action = new MemberChangeAction();
+		}else if (cmd.equals("/leave.do")) {
+			action = new MemberLeaveAction();
 		}
 		
 		
